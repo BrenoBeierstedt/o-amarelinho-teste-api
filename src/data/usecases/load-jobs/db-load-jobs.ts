@@ -5,7 +5,7 @@ import { LoadJobRepository } from '../../protocols/db/job/load-job-repository'
 export class DbLoadJobs implements LoadJobs {
   constructor (private readonly loadJobsRepository: LoadJobRepository) {}
   async load (): Promise<JobModel[]> {
-    await this.loadJobsRepository.loadAll()
-    return []
+    const jobs = await this.loadJobsRepository.loadAll()
+    return jobs
   }
 }
