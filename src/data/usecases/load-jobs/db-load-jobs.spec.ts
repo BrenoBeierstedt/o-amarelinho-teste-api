@@ -26,17 +26,30 @@ const makeFakeJobs = (): JobModel[] => {
   ]
 }
 
+interface SutTypes {
+  sut: DbLoadJobs
+  loadJobsRepositorystub: LoadJobRepository
+}
+
+const makeLoadJobsRepository = (): LoadJobRepository => {
+  class LoadJobsRepositoryStub implements LoadJobRepository {
+    async loadAll (): Promise<JobModel[]> {
+      return new Promise<JobModel[]>((resolve) => resolve(makeFakeJobs()))
+    }
+  }
+  return new LoadJobsRepositoryStub()
+}
+
+const makeSut = (): SutTypes => {
+  const loadJobsRepositorystub = makeLoadJobsRepository()
+  const sut = new DbLoadJobs(loadJobsRepositorystub)
+  return { sut, loadJobsRepositorystub }
+}
+
 describe('DbLoadJobs', () => {
   test('Should call LoadJobsRepository', async () => {
-    class LoadJobsRepositoryStub implements LoadJobRepository {
-      async loadAll (): Promise<JobModel[]> {
-        return new Promise<JobModel[]>((resolve) => resolve(makeFakeJobs()))
-      }
-    }
-
-    const loadJobsRepositorystub = new LoadJobsRepositoryStub()
+    const { sut, loadJobsRepositorystub } = makeSut()
     const loadAllSpy = jest.spyOn(loadJobsRepositorystub, 'loadAll')
-    const sut = new DbLoadJobs(loadJobsRepositorystub)
     await sut.load()
     expect(loadAllSpy).toHaveBeenCalled()
   })
