@@ -1,5 +1,5 @@
 import { Controller, HttpRequest, HttpResponse, LoadJobs } from './load-jobs-controller-protocols'
-import { ok, serverError } from '../../../helpers/http-helper'
+import { noContent, ok, serverError } from '../../../helpers/http-helper'
 
 export class LoadJobsController implements Controller {
   constructor (private readonly loadJobs: LoadJobs) {}
@@ -7,7 +7,7 @@ export class LoadJobsController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const jobs = await this.loadJobs.load()
-      return ok(jobs)
+      return jobs.length ? ok(jobs) : noContent()
     } catch (e) {
       return serverError()
     }
