@@ -26,6 +26,26 @@ const makeFakeJobs = (): JobModel[] => {
   ]
 }
 
+interface SutTypes {
+  sut: LoadJobsController
+  loadJobsStub: LoadJobs
+}
+
+const makeLoadJobs = (): LoadJobs => {
+  class LoadJobsStub implements LoadJobs {
+    async load (): Promise<JobModel[]> {
+      return new Promise(resolve => resolve(makeFakeJobs()))
+    }
+  }
+  return new LoadJobsStub()
+}
+
+const makeSut = (): SutTypes => {
+  const loadJobsStub = makeLoadJobs()
+  const sut = new LoadJobsController(loadJobsStub)
+  return { sut, loadJobsStub }
+}
+
 describe('LoadJobs Controller', () => {
   beforeAll(() => {
     MockDate.set(new Date())
@@ -34,14 +54,8 @@ describe('LoadJobs Controller', () => {
     MockDate.reset()
   })
   test('Should call LoadJobs', async () => {
-    class LoadJobsStub implements LoadJobs {
-      async load (): Promise<JobModel[]> {
-        return new Promise(resolve => resolve(makeFakeJobs()))
-      }
-    }
-    const loadJobsStub = new LoadJobsStub()
+    const { sut, loadJobsStub } = makeSut()
     const loadSpy = jest.spyOn(loadJobsStub, 'load')
-    const sut = new LoadJobsController(loadJobsStub)
     await sut.handle({})
     expect(loadSpy).toHaveBeenCalled()
   })
