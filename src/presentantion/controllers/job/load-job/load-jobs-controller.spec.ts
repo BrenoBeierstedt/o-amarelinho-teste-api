@@ -1,7 +1,7 @@
 import { LoadJobsController } from './load-jobs-controller'
 import { LoadJobs, JobModel } from './load-jobs-controller-protocols'
 import MockDate from 'mockdate'
-import { ok } from '../../../helpers/http-helper'
+import { ok, serverError } from '../../../helpers/http-helper'
 
 const makeFakeJobs = (): JobModel[] => {
   return [{
@@ -66,5 +66,12 @@ describe('LoadJobs Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(ok(makeFakeJobs()))
+  })
+
+  test('Should return 500 if LoadJobs throws', async () => {
+    const { sut, loadJobsStub } = makeSut()
+    jest.spyOn(loadJobsStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(serverError())
   })
 })
