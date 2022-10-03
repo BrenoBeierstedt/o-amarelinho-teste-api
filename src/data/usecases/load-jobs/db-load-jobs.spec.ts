@@ -59,4 +59,11 @@ describe('DbLoadJobs', () => {
     const jobs = await sut.load()
     expect(jobs).toEqual(makeFakeJobs())
   })
+
+  test('Should throw if LoadJobsRepository throws', async () => {
+    const { sut, loadJobsRepositorystub } = makeSut()
+    jest.spyOn(loadJobsRepositorystub, 'loadAll').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow()
+  })
 })
