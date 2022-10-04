@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
 model job {
@@ -17,6 +17,6 @@ model job {
  companyName    String
  cityName       String
  stateName      String
- updatedAt      DateTime
- createdAt      DateTime
+ updatedAt      DateTime @default(now())
+ createdAt      DateTime @default(now())
 }
