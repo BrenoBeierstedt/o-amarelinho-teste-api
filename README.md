@@ -7,6 +7,9 @@ o projeto consiste em 3 repositórios distintos, sendo eles:
 - [Api (Atual)](https://github.com/BrenoBeierstedt/o-amarelinho-teste-api) : Projeto Back-end
 - [Web](https://github.com/BrenoBeierstedt/o-amarelinho-teste-web) : Projeto Front-end
 
+## Executando
+* o mesmo pode ser inicializado localmente com o comando ``npm run dev``
+
 > ## Princípios
 
 * Single Responsibility Principle (SRP)
