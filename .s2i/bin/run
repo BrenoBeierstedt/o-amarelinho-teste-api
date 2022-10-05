@@ -4,8 +4,8 @@
 # and another to production
 # even if in the begging of the project both of then are the same.
 
-if [ $APP_ENV == 'development' ]; then
-  yarn run start-dev
+if [ "$NODE_ENV" == 'development' ]; then
+  npm run dev
 else
-  yarn run start
+  npm run build
 fi

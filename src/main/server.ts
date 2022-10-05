@@ -1,3 +1,4 @@
 import app from './config/app'
 
-app.listen(process.env.PORT, () => console.log('Server running at: http://localhost:5050 '))
+// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+app.listen(process.env.PORT, () => console.log(`Server running at: http://localhost:${process.env.PORT}`))

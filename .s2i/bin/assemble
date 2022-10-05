@@ -15,12 +15,12 @@ shopt -s dotglob
 # If there is package.json instal dependencies
 if [ -f package.json ]; then
   echo "### Found package.json, installing the dependencies"
-  if [ $APP_ENV == 'development' ]; then
+  if [ "$NODE_ENV" == 'development' ]; then
     # I'm making sure we're in a development environment
-    yarn install --production=false
+    npm install --production=false
   else
     # I'm making sure we're in a production environment
-    yarn install --production=true
+    npm install --production=true
   fi
 fi
 
