@@ -5,7 +5,7 @@ import { noContent, ok, serverError } from '../../../helpers/http-helper'
 
 const makeFakeJobs = (): JobModel[] => {
   return [{
-    id: 'id',
+    id: 1,
     title: 'some title',
     description: 'some description',
     companyName: 'some company name',
@@ -15,7 +15,7 @@ const makeFakeJobs = (): JobModel[] => {
     createdAt: new Date()
   },
   {
-    id: 'other_id',
+    id: 2,
     title: 'other title',
     description: 'other description',
     companyName: 'other company name',
