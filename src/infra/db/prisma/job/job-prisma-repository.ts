@@ -4,6 +4,10 @@ import { JobModel } from '../../../../domain/models/job'
 
 export class JobPrismaRepository implements LoadJobRepository {
   async loadAll (): Promise<JobModel[]> {
-    return await prisma.job.findMany()
+    return await prisma.job.findMany({
+      orderBy: {
+        updatedAt: 'desc'
+      }
+    })
   }
 }

@@ -9,6 +9,9 @@
     "prepare": "husky install",
     "dev": "tsnd --exit-child src/main/server.ts"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "Breno Beierstedt da Rosa",
   "license": "ISC",
